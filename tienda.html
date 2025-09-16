@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IRON WILL - Tienda</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body id="store-page">
+<header class="navbar">
+  <div class="logo">IRON WILL</div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="clases.html">Clases</a></li>
+      <li><a href="tienda.html" class="active">Tienda</a></li>
+      <li><a href="carrito.html">Carrito <span id="cart-count">0</span></a></li>
+      <li><a href="login.html">Iniciar Sesión</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+      <li><a href="agregar.html">Agregar Producto</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section id="tienda" class="section">
+  <div id="productos-lista" class="grid"></div>
+</section>
+
+<script src="products-data.js"></script>
+
+<script>
+  // ✅ Cargar productos (respetando eliminados)
+  function cargarProductos() {
+    let productos = JSON.parse(localStorage.getItem("ironwill_productos"));
+
+    if (!productos) {
+      // Primera carga: base + extras
+      const base = window.productos || [];
+      const extra = JSON.parse(localStorage.getItem("ironwill_productos_extra") || "[]");
+      productos = [...base, ...extra];
+      localStorage.setItem("ironwill_productos", JSON.stringify(productos));
+    }
+
+    return productos;
+  }
+
+  // 👉 Refrescar la UI de productos
+  function mostrarProductos() {
+    const productos = JSON.parse(localStorage.getItem("ironwill_productos") || "[]");
+    const lista = document.getElementById('productos-lista');
+
+    if (productos.length === 0) {
+      lista.innerHTML = '<p style="text-align:center;">No hay productos disponibles.</p>';
+      return;
+    }
+
+    lista.innerHTML = productos.map(p => `
+      <div class="card product">
+        <img src="${p.imagen || p.img}" alt="${p.nombre}" style="width:100%;height:180px;object-fit:cover;">
+        <h3>${p.nombre}</h3>
+        ${p.descripcion ? `<p>${p.descripcion}</p>` : ""}
+        <p><strong>Precio:</strong> $${p.precio.toLocaleString()}</p>
+        <p><strong>Stock:</strong> ${p.stock !== undefined ? p.stock : (p.cantidad !== undefined ? p.cantidad : "N/A")}</p>
+        <button 
+          class="btn-primary add-to-cart" 
+          data-id="${p.id}" 
+          ${p.stock <= 0 ? "disabled" : ""}>
+          ${p.stock <= 0 ? "Agotado" : "Agregar al carrito"}
+        </button>
+        <button 
+          class="btn-danger delete-product" 
+          data-id="${p.id}">
+          ❌ Eliminar
+        </button>
+      </div>
+    `).join('');
+  }
+
+  // 🗑️ Eliminar producto
+  document.addEventListener("click", function(e) {
+    if (e.target.classList.contains("delete-product")) {
+      const id = e.target.getAttribute("data-id");
+
+      let productos = JSON.parse(localStorage.getItem("ironwill_productos") || "[]");
+      productos = productos.filter(p => p.id != id);
+
+      localStorage.setItem("ironwill_productos", JSON.stringify(productos));
+
+      mostrarProductos(); // refrescar la lista
+      alert("✅ Producto eliminado");
+    }
+  });
+
+  // 🔄 Exponer función para que cart.js pueda refrescar stock
+  window.actualizarProductosUI = mostrarProductos;
+
+  // Inicialización
+  cargarProductos();
+  mostrarProductos();
+</script>
+
+<!-- Mini Carrito -->
+<div id="mini-cart" class="mini-cart hidden">
+  <h4>🛒 Carrito</h4>
+  <div id="mini-cart-items"></div>
+  <div class="mini-cart-footer">
+    <p id="mini-cart-total">Total: $0</p>
+    <a href="carrito.html" class="btn-primary">Ver Carrito</a>
+  </div>
+</div>
+
+<!-- Conectar con lógica de carrito -->
+<script src="cart.js"></script>
+<script src="usuario.js"></script>
+</body>
+</html>
