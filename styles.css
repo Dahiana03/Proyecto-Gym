@@ -1,0 +1,637 @@
+/* ===================================
+   🎨 VARIABLES Y RESET
+   =================================== */
+:root {
+  --color-primary: #ef4444;
+  --color-primary-dark: #dc2626;
+  --color-secondary: #2563eb;
+  --color-secondary-dark: #1e40af;
+  --color-success: #10b981;
+  --color-warning: #facc15;
+  --color-dark: #111827;
+  --color-dark-gray: #1f2937;
+  --color-gray: #374151;
+  --color-light: #f9fafb;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--color-light);
+  color: var(--color-gray);
+  line-height: 1.6;
+}
+
+/* ===================================
+   🔹 COMPONENTES GLOBALES
+   =================================== */
+.btn-primary {
+  background: var(--color-primary);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background 0.3s;
+}
+.btn-primary:hover { background: var(--color-primary-dark); }
+
+.btn-secondary {
+  background: var(--color-secondary);
+  color: white;
+  padding: 10px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.btn-secondary:hover { background: var(--color-secondary-dark); }
+
+.section {
+  padding: 60px 20px;
+  text-align: center;
+}
+.section.dark {
+  background: var(--color-dark-gray);
+  color: white;
+}
+.section h2 {
+  font-size: 2.2rem;
+  margin-bottom: 24px;
+  font-weight: bold;
+  position: relative;
+  display: inline-block;
+  padding-bottom: 10px;
+}
+.section h2::after {
+  content: "";
+  display: block;
+  width: 60px;
+  height: 4px;
+  background: var(--color-primary);
+  margin: 8px auto 0;
+  border-radius: 2px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+/* ===================================
+   🔹 LAYOUT GENERAL (Navbar + Hero)
+   =================================== */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 32px;
+  background: var(--color-dark);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+.navbar .logo {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--color-primary);
+}
+.navbar ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+.navbar a {
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+.navbar a:hover { color: var(--color-primary); }
+#cart-count {
+  background: var(--color-primary);
+  color: white;
+  font-size: 0.8rem;
+  padding: 2px 6px;
+  border-radius: 50%;
+  margin-left: 6px;
+  font-weight: bold;
+}
+
+/* Hero */
+.hero {
+  height: 90vh;
+  background: url("/img/fondo.jpg") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  position: relative;
+}
+.hero-overlay {
+  background: rgba(0,0,0,0.6);
+  padding: 40px;
+  border-radius: 12px;
+}
+.hero h1 { font-size: 2.5rem; margin-bottom: 16px; }
+.hero p { font-size: 1.2rem; margin-bottom: 20px; }
+
+/* ===================================
+   🏠 INDEX (Instalaciones + Membresías)
+   =================================== */
+#instalaciones .card,
+#clases .card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+  cursor: pointer;
+  background: var(--color-dark-gray);
+}
+#instalaciones .card img,
+#clases .card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+#instalaciones .card:hover img,
+#clases .card:hover img { transform: scale(1.1); }
+
+#instalaciones .overlay,
+#clases .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  text-align: center;
+  padding: 20px;
+}
+#instalaciones .card:hover .overlay,
+#clases .card:hover .overlay {
+  opacity: 1;
+  transform: translateY(0);
+}
+#instalaciones .overlay h3,
+#clases .overlay h3 { color: var(--color-primary); font-size: 1.5rem; margin-bottom: 8px; }
+#instalaciones .overlay p,
+#clases .overlay p { color: #f3f4f6; font-size: 0.95rem; }
+
+/* Membresías */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.pricing-card {
+  background: white;
+  border-radius: 12px;
+  padding: 30px 20px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 360px;
+}
+.pricing-card:hover { transform: translateY(-5px); box-shadow: 0 12px 20px rgba(0,0,0,0.2); }
+.pricing-card h3 { font-size: 1.5rem; margin-bottom: 10px; color: var(--color-dark); }
+.pricing-card .price { font-size: 1.3rem; font-weight: bold; color: var(--color-primary); margin-bottom: 15px; }
+.pricing-card ul { list-style: none; margin: 0 0 20px; padding: 0; }
+.pricing-card ul li { margin: 6px 0; }
+.pricing-card.featured {
+  background: var(--color-dark-gray);
+  color: white;
+  border: 2px solid var(--color-primary);
+}
+.pricing-card.vip {
+  background: #4b1d61;
+  color: white;
+  border: 2px solid #a855f7;
+  animation: vipGlow 2s infinite alternate;
+}
+.pricing-card.vip h3,
+.pricing-card.vip .price { color: var(--color-warning); }
+
+/* ===================================
+   📚 CLASES (clases.html)
+   =================================== */
+/* (reutiliza estilos de tarjetas con overlay de instalaciones) */
+
+/* ===================================
+   🛍️ TIENDA (tienda.html)
+   =================================== */
+#tienda .grid {
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+}
+.card.product {
+  background: var(--color-dark);
+  backdrop-filter: blur(6px);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 8px 20px rgba(248, 246, 246, 0.3);
+  text-align: center;
+  transition: transform 0.3s, box-shadow 0.3s;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  animation: fadeInUp 0.5s ease forwards;
+  opacity: 0;
+}
+.card.product img {
+  width: 100%; height: 180px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 10px;
+  transition: transform 0.4s;
+}
+.card.product:hover img { transform: scale(1.05); }
+.card.product h3 { font-size: 1.2rem; margin: 10px 0 5px; color: #e2e6ee; }
+.card.product p { font-size: 1.1rem; font-weight: bold; color: var(--color-primary); margin-bottom: 15px; }
+.card.product button {
+  background: var(--color-primary);
+  border: none;
+  padding: 10px;
+  border-radius: 10px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+.card.product button:hover { background: var(--color-primary-dark); transform: scale(1.05); }
+
+/* Mini Carrito */
+.mini-cart {
+  position: fixed;
+  top: 70px; right: 20px;
+  background: rgba(0,0,0,0.85);
+  color: white;
+  width: 280px;
+  max-height: 400px;
+  overflow-y: auto;
+  padding: 15px;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  z-index: 999;
+  transition: opacity 0.3s, transform 0.3s;
+}
+.mini-cart.hidden { opacity: 0; transform: translateY(-20px); pointer-events: none; }
+.mini-cart h4 { margin-bottom: 10px; font-size: 1.1rem; color: var(--color-warning); }
+.mini-cart-item {
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(255,255,255,0.1);
+  padding: 6px; border-radius: 8px; margin-bottom: 8px;
+}
+.mini-cart-item img {
+  width: 40px; height: 40px;
+  object-fit: cover;
+  border-radius: 6px;
+  margin-right: 8px;
+}
+.mini-cart-footer { text-align: center; margin-top: 10px; }
+
+/* ===================================
+   🛒 CARRITO (carrito.html)
+   =================================== */
+#carrito {
+  background: rgba(0, 0, 0, 0.55);
+  backdrop-filter: blur(6px);
+  max-width: 800px;
+  margin: 80px auto;
+  padding: 30px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  text-align: center;
+  color: white;
+}
+#carrito h2 { font-size: 2rem; margin-bottom: 20px; color: var(--color-primary); }
+.cart-items { display: grid; gap: 15px; margin-bottom: 20px; }
+.cart-item {
+  display: flex; align-items: center; justify-content: space-between;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 10px;
+}
+.cart-item img {
+  width: 60px; height: 60px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-right: 10px;
+}
+.cart-info { flex: 1; text-align: left; margin-right: 10px; }
+.cart-price { font-weight: bold; color: var(--color-warning); margin-right: 10px; }
+.remove-btn {
+  background: transparent;
+  border: none;
+  color: var(--color-primary);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+.remove-btn:hover { transform: scale(1.2); }
+.cart-total { margin-top: 20px; font-size: 1.2rem; }
+.checkout-btn {
+  display: inline-block;
+  margin-top: 15px;
+  background: var(--color-primary);
+  color: white;
+  padding: 12px 20px;
+  border-radius: 10px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: background 0.3s, transform 0.2s;
+  animation: pulse 1.8s infinite;
+}
+.checkout-btn:hover { background: var(--color-primary-dark); transform: scale(1.05); animation: none; }
+
+/* ===================================
+   🧾 FACTURA (opcional en carrito)
+   =================================== */
+#factura {
+  background: white;
+  padding: 30px;
+  border-radius: 12px;
+  margin: 40px auto;
+  max-width: 800px;
+  box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+}
+#factura h2 { text-align: center; margin-bottom: 20px; color: var(--color-dark); }
+#factura p { margin: 6px 0; color: var(--color-gray); }
+.invoice-table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+.invoice-table th, .invoice-table td {
+  border: 1px solid #ddd; padding: 12px; text-align: center;
+}
+.invoice-table th { background: var(--color-dark); color: white; }
+.invoice-table td { background: var(--color-light); }
+#factura h3 { text-align: right; margin-top: 20px; color: var(--color-secondary); }
+
+/* ===================================
+   🔑 LOGIN & REGISTRO (login.html, register.html)
+   =================================== */
+.login-form, .register-form {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 40px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+.login-form h2, .register-form h2 {
+  text-align: center;
+  font-size: 2rem;
+  color: var(--color-primary);
+}
+.login-form input, .register-form input {
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: rgba(255,255,255,0.1);
+  border: 1px solid rgba(255,255,255,0.6);
+  color: white;
+}
+.login-form input::placeholder { color: var(--color-gray); }
+.login-form button, .register-form button {
+  background: var(--color-primary);
+  border: none;
+  border-radius: 8px;
+  padding: 12px;
+  color: white;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.2s;
+}
+.login-form button:hover, .register-form button:hover {
+  background: var(--color-primary-dark);
+  transform: scale(1.05);
+}
+.login-form p, .register-form p { text-align: center; font-size: 0.9rem; }
+
+/* ===================================
+   📞 CONTACTO (contacto.html)
+   =================================== */
+#contacto {
+  text-align: center;
+  padding: 60px 20px;
+  max-width: 800px;
+  margin: 80px auto;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+}
+#contacto h2 {
+  font-size: 2rem;
+  color: var(--color-primary);
+  margin-bottom: 20px;
+}
+#contacto .socials a {
+  color: var(--color-warning);
+  font-weight: bold;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+#contacto .socials a:hover { color: white; }
+
+/* ===================================
+   ⚙️ UTILIDADES
+   =================================== */
+.cart-message, .auth-message {
+  position: fixed;
+  bottom: 20px; right: 20px;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  color: white;
+  z-index: 1000;
+  animation: fadeIn 0.4s ease;
+}
+.cart-message.info { background: var(--color-secondary); }
+.cart-message.success, .auth-message.success { background: var(--color-success); }
+.cart-message.error, .auth-message.error { background: var(--color-primary); }
+
+/* ===================================
+   🎬 ANIMACIONES
+   =================================== */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeInUp {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes pulse {
+  0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239,68,68,0.6); }
+  70% { transform: scale(1.05); box-shadow: 0 0 0 15px rgba(239,68,68,0); }
+  100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239,68,68,0); }
+}
+@keyframes vipGlow {
+  0% { box-shadow: 0 0 10px rgba(168, 85, 247, 0.5); }
+  100% { box-shadow: 0 0 25px rgba(168, 85, 247, 0.9); }
+}
+
+/* ===================================
+   📱 RESPONSIVE
+   =================================== */
+@media (max-width: 768px) {
+  .navbar { flex-direction: column; gap: 10px; }
+  .hero h1 { font-size: 1.8rem; }
+  .grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) {
+  .hero h1 { font-size: 1.4rem; }
+  .hero p { font-size: 0.9rem; }
+}
+
+/* ===================================
+   🎨 FONDOS POR PÁGINA
+   =================================== */
+body#store-page,
+body#cart-page,
+body#classes-page,
+body#contact-page,
+body#auth-page {
+  background-attachment: fixed;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+body#store-page, body#cart-page {
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+              url("img/fondo tienda.jpg") center/cover no-repeat;
+}
+
+body#classes-page {
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+              url("img/fondo pags.jpg") center/cover no-repeat;
+}
+
+body#contact-page, body#auth-page {
+  background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+              url("img/fondo contacto.jpg") center/cover no-repeat;
+}
+
+/* ===================================
+   🔑 FORMULARIOS LOGIN & REGISTRO
+   =================================== */
+.login-form, .register-form {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 40px;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  background: rgba(0, 0, 0, 0.6);   /* 🔥 caja visible sobre el fondo */
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+}
+
+.login-form input, .register-form input {
+  padding: 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: white;                /* 🔥 casillas visibles */
+  border: 1px solid #ccc;
+  color: var(--color-dark);
+}
+.login-form input:focus, .register-form input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 5px var(--color-primary);
+}
+
+/* ==========================
+   TOAST (notificaciones flotantes)
+   ========================== */
+.toast {
+  position: fixed;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #333;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  opacity: 0;
+  transition: all 0.3s ease-in-out;
+  z-index: 10000;
+}
+
+.toast.show {
+  bottom: 30px;
+  opacity: 1;
+}
+
+.toast.success {
+  background: #16a34a; /* verde */
+}
+
+.toast.error {
+  background: #dc2626; /* rojo */
+}
+
+.toast.info {
+  background: #2563eb; /* azul */
+}
+
+
+/* ==========================
+   AGREGAR PRODUCTO - con imagen de fondo
+   ========================== */
+body#agregar-page {
+  min-height: 100vh;
+  background: url("img/fondo\ tienda.jpg") no-repeat center center fixed;
+  background-size: cover; /* la imagen ocupa toda la pantalla */
+  display: flex;
+  flex-direction: column;
+}
+
+
+#add-product-form {
+  max-width: 500px;
+  margin: 60px auto;
+  background: #333;
+  padding: 25px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+#add-product-form h2 {
+  margin-bottom: 20px;
+  color: #9c8e8e;
+}
+
+#add-product-form input,
+#add-product-form textarea {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: 1px solid #f8f6f6;
+  font-size: 15px;
+}
+
+#add-product-form button {
+  width: 100%;
+  margin-top: 15px;
+  padding: 12px;
+  font-size: 16px;
+}

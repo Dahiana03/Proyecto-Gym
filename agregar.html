@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Agregar Producto - IRON WILL</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body id="agregar-page">
+<header class="navbar">
+  <div class="logo">IRON WILL</div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="tienda.html">Tienda</a></li>
+      <li><a href="carrito.html">Carrito <span id="cart-count">0</span></a></li>
+      <li><a href="agregar.html" class="active">Agregar Producto</a></li>
+    </ul>
+  </nav>
+</header>
+
+<section class="section">
+  <form id="add-product-form">
+    <h2>Agregar Nuevo Producto</h2>
+    <input type="text" id="nombre" placeholder="Nombre del producto" required>
+    <input type="number" id="precio" placeholder="Precio" required>
+    <textarea id="descripcion" placeholder="Descripción"></textarea>
+    <input type="text" id="imagen" placeholder="Ruta o URL de imagen (ej: https://picsum.photos/300/200)" required>
+
+    <!-- Vista previa -->
+    <img id="preview" style="max-width:120px; margin-top:10px; display:none; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.2);">
+
+    <input type="number" id="stock" placeholder="Stock inicial" required>
+    <button type="submit" class="btn-primary">Guardar Producto</button>
+  </form>
+</section>
+
+<script>
+  // 👉 Vista previa de la imagen
+  document.getElementById("imagen").addEventListener("input", function() {
+    const preview = document.getElementById("preview");
+    if (this.value.trim() !== "") {
+      preview.src = this.value;
+      preview.style.display = "block";
+    } else {
+      preview.style.display = "none";
+      preview.src = "";
+    }
+  });
+
+  // 👉 Guardar nuevo producto directamente en ironwill_productos
+  document.getElementById("add-product-form").addEventListener("submit", function(e) {
+    e.preventDefault();
+
+    let productos = JSON.parse(localStorage.getItem("ironwill_productos") || "[]");
+
+    const producto = {
+      id: Date.now(), // ID único
+      nombre: document.getElementById("nombre").value,
+      precio: parseFloat(document.getElementById("precio").value),
+      descripcion: document.getElementById("descripcion").value,
+      imagen: document.getElementById("imagen").value,
+      stock: parseInt(document.getElementById("stock").value)
+    };
+
+    productos.push(producto);
+
+    localStorage.setItem("ironwill_productos", JSON.stringify(productos));
+
+    alert("✅ Producto agregado con éxito");
+    this.reset();
+    document.getElementById("preview").style.display = "none";
+  });
+</script>
+</body>
+</html>
