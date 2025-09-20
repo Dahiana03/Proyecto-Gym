@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IRON WILL - Gimnasio & Fitness</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<header class="navbar">
+  <div class="logo">IRON WILL</div>
+  <nav>
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="clases.html">Clases</a></li>
+      <li><a href="tienda.html">Tienda</a></li>
+      <li><a href="carrito.html">Carrito <span id="cart-count">0</span></a></li>
+      <li><a href="login.html">Iniciar Sesión</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+</header>
+
+  <!-- Hero principal -->
+  <section id="hero" class="hero">
+    <div class="hero-overlay">
+      <h1>ENTRENA SIN EXCUSAS</h1>
+      <p>Descubre tu fuerza interior en IRON WILL</p>
+      <a href="register.html" class="btn-primary">Únete Ahora</a>
+
+    </div>
+  </section>
+
+  <!-- Instalaciones -->
+  <section id="instalaciones" class="section dark">
+  <h2>Nuestras Instalaciones</h2>
+  <div class="grid">
+    <div class="card">
+      <img src="img/cardio.jpg" alt="Zona Cardio">
+      <div class="overlay">
+        <h3>Zona Cardio</h3>
+        <p>Equipos modernos y Cinema Cardio para entrenar con energía.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="img/pesas.jpg" alt="Zona de Pesas">
+      <div class="overlay">
+        <h3>Zona de Pesas</h3>
+        <p>Área de musculación completa y sin esperas.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="img/funcional.jpg" alt="Zona Funcional">
+      <div class="overlay">
+        <h3>Zona Funcional</h3>
+        <p>Espacio con Synergy 360, kettlebells y más.</p>
+      </div>
+    </div>
+    <div class="card">
+      <img src="img/vip.jpg" alt="Zona VIP">
+      <div class="overlay">
+        <h3>Zona VIP</h3>
+        <p>Relájate en espacios premium.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+  <!-- Membresías -->
+  <section id="membresias" class="section">
+    <h2>Planes y Membresías</h2>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Básico</h3>
+        <p class="price">$90.000 / mes</p>
+        <ul>
+          <li>Acceso a zonas de cardio y pesas</li>
+          <li>Clases grupales básicas</li>
+        </ul>
+        <a href="register.html" class="btn-secondary">Inscríbete</a>
+      </div>
+      <div class="pricing-card featured">
+        <h3>Premium</h3>
+        <p class="price">$130.000 / mes</p>
+        <ul>
+          <li>Acceso total a todas las zonas</li>
+          <li>Clases ilimitadas</li>
+          <li>Evaluación física mensual</li>
+        </ul>
+        <a href="register.html" class="btn-primary">Inscríbete</a>
+      </div>
+      <div class="pricing-card vip">
+  <h3>VIP</h3>
+  <p class="price">$180.000 / mes</p>
+  <ul>
+    <li>Todos los beneficios Premium</li>
+    <li>Acceso a Zona VIP</li>
+    <li>Entrenador personal</li>
+  </ul>
+  <a href="register.html" class="btn-secondary">Inscríbete</a>
+</div>
+
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2025 IRON WILL - Todos los derechos reservados</p>
+  </footer>
+
+  <script src="cart.js"></script>
+  <script src="auth.js"></script>
+  <script src="usuario.js"></script>
+
+  <div id="mini-cart" class="mini-cart hidden">
+  <h4>🛒 Carrito</h4>
+  <div id="mini-cart-items"></div>
+  <div class="mini-cart-footer">
+    <p id="mini-cart-total">Total: $0</p>
+    <a href="carrito.html" class="btn-primary">Ver Carrito</a>
+  </div>
+</div>
+</body>
+</html>
+
+
